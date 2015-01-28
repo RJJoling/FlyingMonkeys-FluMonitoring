@@ -39,30 +39,8 @@ files <- c('data/griepTweetsFiltered.csv', 'data/koortsTweetsFiltered.csv', 'dat
 
 FormatDateColumn(files)
 
-## Bucket tweets from municipalites into clusters
-
-
-
-## Create monthly averages
-
-## Plot monthly averages
-
-## Create GUI interface to show monthly averages compare to each other
 
 
 
 
-# name <- ""
-# for (char in keyword){
-#
-#   if (char in [a-zA-Z]){
-#     name <- paste(name, "")
-#   }
-# }
-#
-#   name <- paste(name, sub("[^[:alpha:]]","",char, sep = "")
-# }
-# if (is.character(char)){
-#   name += char
-# }}
-# paste("data/", name, "Tweets.csv", sep = "")
+
