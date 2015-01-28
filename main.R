@@ -10,12 +10,12 @@ source("R/SelectTweetsAndWriteToCSV.R")
 
 # Get driver for database and make connection to it
 drv <- dbDriver("PostgreSQL")
-con <- dbConnect(drv, host='xx', dbname='xx', user='xx', password='xx')
+con <- dbConnect(drv, host='10.75.14.108', dbname='gis', user='gisuser', password='user')
 
 ## Index dataset, filter to data required
 ## Clip dataset to the Netherlands
 ## Write database to txt or csv
-tweets <- c('griep', 'verkoud', 'koorts')
+tweets <- c('verkoud', 'koorts')
 
 SelectTweetsAndWriteToCSV(tweets)
 
@@ -30,6 +30,7 @@ SelectTweetsAndWriteToCSV(tweets)
 
 # Disconnect connection and unload driver
 dbDisconnect(con)
+
 dbUnloadDriver(drv)
 
 # name <- ""
