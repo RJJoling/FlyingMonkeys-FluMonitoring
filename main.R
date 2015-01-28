@@ -6,6 +6,7 @@ library('RPostgreSQL')
 
 # Load functions
 source("R/SelectTweetsAndWriteToCSV.R")
+source("R/FilterRelevantTweets.R")
 
 
 # Get driver for database and make connection to it
@@ -15,11 +16,26 @@ con <- dbConnect(drv, host='10.75.14.108', dbname='gis', user='gisuser', passwor
 ## Index dataset, filter to data required
 ## Clip dataset to the Netherlands
 ## Write database to txt or csv
-tweets <- c('verkoud', 'koorts')
+tweets <- c('griep', 'verkoud', 'koorts')
 
 SelectTweetsAndWriteToCSV(tweets)
 
+# Disconnect connection and unload driver
+dbDisconnect(con)
+
+dbUnloadDriver(drv)
+
+# Remove irrelevant tweets from files
+
+list <- c('vogelgriep', 'griepepidemie','griepprik', 'griep-epidemie')
+FilterRelevantTweets('data/griepTweets.csv', list)
+
+list <- c('goudkoorts', 'carnavalskoorts', 'hooikoorts', 'koortslip', 'elfstedenkoorts', 'q-koorts', 'plankenkoorts', 'oranjekoorts')
+FilterRelevantTweets('data/koortsTweets.csv', list)
+
 ## Bucket tweets from municipalites into clusters
+
+
 
 ## Create monthly averages
 
@@ -28,10 +44,7 @@ SelectTweetsAndWriteToCSV(tweets)
 ## Create GUI interface to show monthly averages compare to each other
 
 
-# Disconnect connection and unload driver
-dbDisconnect(con)
 
-dbUnloadDriver(drv)
 
 # name <- ""
 # for (char in keyword){
