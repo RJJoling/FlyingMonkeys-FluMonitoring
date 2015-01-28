@@ -56,7 +56,3 @@ adm <- raster::getData("GADM", country = "NLD", level = 0, path = datdir)
   }
 }
 
-
-
-# Try to include an OR statment within SQL query
-# Include print statements so that we know where we are at within the getting data process

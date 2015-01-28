@@ -7,6 +7,7 @@ library('RPostgreSQL')
 # Load functions
 source("R/SelectTweetsAndWriteToCSV.R")
 source("R/FilterRelevantTweets.R")
+source("R/FormatDateColumn.R")
 
 
 # Get driver for database and make connection to it
@@ -32,6 +33,11 @@ FilterRelevantTweets('data/griepTweets.csv', list)
 
 list <- c('goudkoorts', 'carnavalskoorts', 'hooikoorts', 'koortslip', 'elfstedenkoorts', 'q-koorts', 'plankenkoorts', 'oranjekoorts')
 FilterRelevantTweets('data/koortsTweets.csv', list)
+
+# Format dates of tweets to Month/Year
+files <- c('data/griepTweetsFiltered.csv', 'data/koortsTweetsFiltered.csv', 'data/verkoudTweets.csv')
+
+FormatDateColumn(files)
 
 ## Bucket tweets from municipalites into clusters
 
