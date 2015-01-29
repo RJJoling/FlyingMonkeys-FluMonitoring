@@ -1,46 +1,60 @@
 # Import libraries
-library('sp')
-library('rgdal')
-library('rgeos')
-library('RPostgreSQL')
+if(!require(sp)){install.packages('sp')}
+if(!require(rgdal)){install.packages('rgdal')}
+if(!require(rgeos)){install.packages('rgeos')}
+if(!require(RPostgreSQL)){install.packages('RPostgreSQL')}
 
 simpleCap <- function(x) {
+
   # This function calculates NDVI values
   #
-  # Args:
-  # red.band = input red band
-  # nir.band = input near infrared band
+  # Source: toupper function help
   #
-  # Returns: NDVI values (of input class)
+  # Args:
+  # x = string to be capitalised
+  #
+  # Returns: capitalised words of input string
 
   s <- strsplit(x, " ")[[1]]
-  paste(toupper(substring(s, 1,1)), substring(s, 2),
-        sep="", collapse=" ")
+  paste(toupper(substring(s, 1,1)), substring(s, 2), sep="", collapse=" ")
 }
+
 
 SelectTweetsAndWriteToCSV <- function(list){
 
+  # This function takes a list of keywords and retrieves tweets from the connected
+  # server that include the input keyword(s).
+  #
+  # Args:
+  # list = list of keywords
+  #
+  # Returns: tweets, date and time, coordinates, for each individual keyword,
+  # saved as .CSV
 
-
-# Get boundary of the Netherlands
-datdir <- 'data'
-dir.create(datdir, showWarnings = FALSE)
-adm <- raster::getData("GADM", country = "NLD", level = 0, path = datdir)
+  # Get boundary of the Netherlands
+  datdir <- 'data'
+  dir.create(datdir, showWarnings = FALSE)
+  adm <- raster::getData("GADM", country = "NLD", level = 0, path = datdir)
 
   # Select tweets by keyword
   for (keyword in list){
 
     print(paste('Keyword = ', keyword))
 
-    query <- paste("select tweet_text, tweet_datetime, latitude, longitude from tweets2601 where tweet_text like '%", keyword, "%' or tweet_text like '%", simpleCap(keyword), "%'", sep = "")
-    rs <- dbSendQuery(con, query)
-    df <- fetch(rs,n=-1)
+    query <- paste("select tweet_text, tweet_datetime, latitude,
+                   longitude from tweets2601 where tweet_text like '%",
+                   keyword, "%' or tweet_text like '%", simpleCap(keyword),
+                   "%'", sep = "")
+
+    tweets <- dbSendQuery(con, query)
+    df <- fetch(tweets,n=-1)
 
     print('Data collected')
 
     # Turn dataframe into a spatial points dataframe
     xy <- cbind(df$longitude, df$latitude)
-    sp.df <- SpatialPointsDataFrame(xy, df, proj4string = CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"))
+    sp.df <- SpatialPointsDataFrame(xy, df,
+             proj4string = CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"))
 
     print('Spatial df created')
 
