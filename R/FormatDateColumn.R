@@ -1,7 +1,14 @@
-
-
 FormatDateColumn <- function(filepaths){
 
+  # This function changes the data type of the second colomn to 'date'
+  #
+  # Args:
+  # filepaths = list of filepaths to .CSV-files
+  #
+  # Returns: Same .CSV-file as input file, with data type of the second colomn
+  # changed to 'date'
+
+  # Iterate the input filepaths, change data type of date/time colomn to 'date'
   for (file in filepaths){
     df <- read.csv(file)
     matrix <- as.matrix(df)
