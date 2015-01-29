@@ -5,7 +5,7 @@ if(!require(RPostgreSQL)){install.packages('RPostgreSQL')}
 source("R/SelectTweetsAndWriteToCSV.R")
 source("R/FilterRelevantTweets.R")
 source("R/FormatDateColumn.R")
-source("R/createMap.R", print.eval = F)
+source("R/createMap.R")
 source("R/createPNG.R")
 source("R/BucketTweets.R")
 
@@ -42,14 +42,27 @@ FormatDateColumn(files)
 # ANALYSIS ----------------------------------------------------------------
 # Combine tweets that are within radius
 filepaths <- c("data/verkoudTweets.csv", "data/griepTweetsFiltered.csv", "data/koortsTweetsFiltered.csv")
-radius = 20
+radius <- 20
 combined.tweets <- BucketTweets(filepaths, radius)
 
 
 # VISUALISATION -----------------------------------------------------------
 
 # Create Maps
-createMap
+
+months <- levels(combined.tweets$tweet_datetime)
+count <- 1
+
+while (count <= length(months)){
+  month = months[count]
+  print(month)
+  map <- createMap(combined.tweets, month)
+  png(paste("output/", month, ".png", sep = ""), height = 3000, width = 5000, res = 300)
+  plot(map)
+  dev.off()
+  count <- count + 1
+}
+
 
 
 

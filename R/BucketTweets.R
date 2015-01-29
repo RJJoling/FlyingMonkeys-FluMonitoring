@@ -24,5 +24,5 @@ BucketTweets <- function(filepaths, radius){
 
   print("Bucket tweets : DONE")
 
-  return count.df
+  return(count.df)
 }
