@@ -35,13 +35,12 @@ koorts.filter <- c('goudkoorts', 'carnavalskoorts', 'hooikoorts', 'koortslip',
 FilterRelevantTweets(koorts.filepath, koorts.filter)
 
 # Format dates of tweets to month/year
-files <- c('data/griepTweetsFiltered.csv', 'data/koortsTweetsFiltered.csv', 'data/verkoudTweets.csv')
-FormatDateColumn(files)
+filepaths <- c('data/griepTweetsFiltered.csv', 'data/koortsTweetsFiltered.csv', 'data/verkoudTweets.csv')
+FormatDateColumn(filepaths)
 
 
 # ANALYSIS ----------------------------------------------------------------
 # Combine tweets that are within radius
-filepaths <- c("data/verkoudTweets.csv", "data/griepTweetsFiltered.csv", "data/koortsTweetsFiltered.csv")
 radius <- 20
 combined.tweets <- BucketTweets(filepaths, radius)
 
