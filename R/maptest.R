@@ -21,3 +21,7 @@ map <- ggmap(basemap, alpha = .2)
 
 map + geom_jitter(data = data, aes(x=longitude, y=latitude, size = count), color = 'darkgreen', alpha = 1)
 
+map.intersect <- gIntersection(adm, basemap)
+
+test.df <- df
+test.df$kewyord <- c("test")
