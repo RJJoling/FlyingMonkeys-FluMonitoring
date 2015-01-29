@@ -1,3 +1,7 @@
+# Team Name:               Team Members:               Date:
+# Flying Monkeys           Robbert-Jan Joling          29-01-2015
+#                          Damiano Luzzi
+
 # Import libraries
 if(!require(RPostgreSQL)){install.packages('RPostgreSQL')}
 
@@ -6,7 +10,6 @@ source("R/SelectTweetsAndWriteToCSV.R")
 source("R/FilterRelevantTweets.R")
 source("R/FormatDateColumn.R")
 source("R/createMap.R")
-source("R/createPNG.R")
 source("R/BucketTweets.R")
 
 
@@ -61,7 +64,4 @@ while (count <= length(months)){
   dev.off()
   count <- count + 1
 }
-
-
-
 
