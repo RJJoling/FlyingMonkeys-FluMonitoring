@@ -56,6 +56,10 @@ adm <- raster::getData("GADM", country = "NLD", level = 0, path = datdir)
 
     print('Data clipped to boundary')
 
+    # Add column with keyword of the data
+
+    nld.df$keyword <- c(keyword)
+
     # Write filtered tweets to .CSV file
     write.csv(nld.df@data, file = paste("data/", keyword, "Tweets.csv", sep = ""), row.names = FALSE)
 
